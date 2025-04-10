@@ -14,7 +14,7 @@
 // To run this application:
 
 
-//   git add . && git commit -m "trip data for manager" && git push
+//   git add . && git commit -m "CSS from previous project" && git push
 
 
 
