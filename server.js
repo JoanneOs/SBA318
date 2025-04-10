@@ -14,7 +14,7 @@
 // To run this application:
 
 
-//   git add . && git commit -m "top each page" && git push
+//   git add . && git commit -m "added nav to menu" && git push
 
 
 
