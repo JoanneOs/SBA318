@@ -14,7 +14,7 @@
 // To run this application:
 
 
-//   git add . && git commit -m "control trips" && git push
+//   git add . && git commit -m "middleware logs every request" && git push
 
 
 
