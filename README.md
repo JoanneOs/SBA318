@@ -135,3 +135,21 @@ How to Contribute
 Fork the repo and create a new branch.
 Make your changes and test them.
 Create a pull request with a description of your changes.
+
+# GET (Read)
+http://localhost:3000/api/drivers
+http://localhost:3000/api/drivers?status=Available  (Filter)
+http://localhost:3000/api/drivers/1                 (Single driver)
+
+# POST (Create)
+http://localhost:3000/api/drivers
+
+# PUT (Update)
+http://localhost:3000/api/drivers/1
+
+# DELETE
+http://localhost:3000/api/drivers/1
+How to test quickly:
+
+For POST/PUT, add -H "Content-Type: application/json" -d '{"key":"value"}'
+For DELETE/PUT, add -X DELETE or -X PUT

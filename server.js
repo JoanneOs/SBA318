@@ -81,3 +81,4 @@ app.listen(PORT, () => {
  //added .env                     # Environment variables (not tracked in git)  same level as server.js and .gitignore
 //  .gitignore	Tells Git to skip certain files	Keeps junk/private stuff out of Git
 // .env	Stores secret environment stuff	Lets you keep sensitive info private
+
