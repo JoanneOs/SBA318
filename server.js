@@ -58,6 +58,11 @@ app.use(express.static(path.join(__dirname, 'public'))); // serve CSS, JS, image
 // Step 5: Set up EJS as the view engine (so we can render HTML with data)
 app.set('view engine', 'ejs');
 
+// Step 6: Define the main routes of the app
+app.use('/', require('./routes/pages')); // all regular pages
+app.use('/api/drivers', require('./routes/api/drivers')); // API for drivers
+app.use('/api/trips', require('./routes/api/trips')); // API for trips
+
 
 // route
 // app.get('/', (req, res) => {
