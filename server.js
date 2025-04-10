@@ -13,6 +13,11 @@
 
 // To run this application:
 
+
+//   git add . && git commit -m "routes for each page" && git push
+
+
+
 // Install dependencies: npm install express ejs dotenv
 // Start server: node server.js
 // Access at http://localhost:3000
