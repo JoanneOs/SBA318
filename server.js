@@ -69,7 +69,7 @@ app.use('/api/drivers', require('./routes/api/drivers')); // API for drivers
 app.use('/api/trips', require('./routes/api/trips')); // API for trips
 
 
-//   git add . && git commit -m "error handler" && git push
+//   git add . && git commit -m "json data vehicles" && git push
 
 
 // Step 7: Handle errors in a nice way

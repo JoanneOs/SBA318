@@ -1,0 +1,4 @@
+[
+    { "id": 1, "type": "Semi Truck", "plate": "TX-7890", "status": "Available" },
+    { "id": 2, "type": "Box Truck", "plate": "TX-4567", "status": "In Maintenance" }
+  ]
