@@ -31,15 +31,42 @@
 //npm run dev
 
 
-const express = require('express');
-const app = express();
-const PORT = process.env.PORT || 3000;
+// const express = require('express');
+// const app = express();
+// const PORT = process.env.PORT || 3000;
 
-// Example route
+// Step 1: Bring in Express and other helpful tools
+const express = require('express');
+const app = express(); // this is our main app
+const path = require('path'); // helps with file paths
+const dotenv = require('dotenv'); // lets us use secret stuff from .env
+
+// Step 2: Load .env file (for PORT and other private config)
+dotenv.config();
+const PORT = process.env.PORT || 3000; // default to 3000 if .env is missing
+
+// Step 3: Bring in my custom middlewares
+const logger = require('./middleware/logger');
+
+// Step 4: Use middlewares — these run *before* any route
+app.use(logger); // log every request to the terminal
+app.use(express.json()); // allow JSON data in POST requests
+app.use(express.urlencoded({ extended: true })); // allow form data
+app.use(express.static(path.join(__dirname, 'public'))); // serve CSS, JS, images, etc
+
+
+
+// route
 app.get('/', (req, res) => {
-  res.send('Hello from TriWay!');
+  res.send('Hello from Triway Transportation!');
 });
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
+
+//node server.js
+//Ctrl-C!  stop your servers each time you want to see changes and run again node server.js
+ //added .env                     # Environment variables (not tracked in git)  same level as server.js and .gitignore
+//  .gitignore	Tells Git to skip certain files	Keeps junk/private stuff out of Git
+// .env	Stores secret environment stuff	Lets you keep sensitive info private
