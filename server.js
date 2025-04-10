@@ -55,11 +55,14 @@ app.use(express.urlencoded({ extended: true })); // allow form data
 app.use(express.static(path.join(__dirname, 'public'))); // serve CSS, JS, images, etc
 
 
+// Step 5: Set up EJS as the view engine (so we can render HTML with data)
+app.set('view engine', 'ejs');
+
 
 // route
-app.get('/', (req, res) => {
-  res.send('Hello from Triway Transportation!');
-});
+// app.get('/', (req, res) => {
+//   res.send('Hello from Triway Transportation!');
+// });
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
