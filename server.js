@@ -14,7 +14,7 @@
 // To run this application:
 
 
-//   git add . && git commit -m "manually driver jason info" && git push
+//   git add . && git commit -m "manually trip json info" && git push
 
 
 

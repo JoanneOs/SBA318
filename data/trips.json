@@ -1,0 +1,5 @@
+[
+    { "id": 101, "origin": "Dallas", "destination": "Houston", "driverId": 1 },
+    { "id": 102, "origin": "Austin", "destination": "San Antonio", "driverId": 2 }
+  ]
+  
