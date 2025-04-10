@@ -1,122 +1,23 @@
-<!--this page shows a list of all drivers -->
-
-<%- include('./partials/header') %>
-<%- include('./partials/nav') %>
-
-<h1>Our Drivers</h1>
-
-<ul>
-  <% drivers.forEach(driver => { %>
-    <li>
-      <strong><%= driver.name %></strong> – <%= driver.licenseNumber %>
-    </li>
-  <% }) %>
-</ul>
-
-
-
-<div class="container my-4">
-  <!-- Driver Status Section -->
-  <div class="row mb-4">
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-header bg-primary text-white">
-          <h3>My Status</h3>
-        </div>
-        <div class="card-body">
-          <form action="/api/drivers/<%= currentDriver.id %>" method="POST">
-            <input type="hidden" name="_method" value="PUT">
-            <div class="mb-3">
-              <select class="form-select" name="status">
-                <option value="Available" <%= currentDriver.status === 'Available' ? 'selected' : '' %>>Available</option>
-                <option value="On Trip" <%= currentDriver.status === 'On Trip' ? 'selected' : '' %>>On Trip</option>
-                <option value="Off Duty" <%= currentDriver.status === 'Off Duty' ? 'selected' : '' %>>Off Duty</option>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-success">Update Status</button>
-          </form>
-        </div>
-      </div>
-    </div>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Driver Portal</title>
+  <%- include('partials/header') %>
+</head>
+<body>
+  <%- include('partials/nav') %>
+  
+  <div class="container mt-4">
+    <h1>Driver Dashboard</h1>
     
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-header bg-info text-white">
-          <h3>My Vehicle</h3>
-        </div>
-        <div class="card-body">
-          <% if (currentVehicle) { %>
-            <p><strong>Type:</strong> <%= currentVehicle.type %></p>
-            <p><strong>Plate:</strong> <%= currentVehicle.plate %></p>
-            <p><strong>Status:</strong> <span class="badge bg-<%= currentVehicle.status === 'Available' ? 'success' : 'warning' %>">
-              <%= currentVehicle.status %>
-            </span></p>
-          <% } else { %>
-            <p class="text-danger">No vehicle assigned</p>
-          <% } %>
-        </div>
+    <% if (currentDriver) { %>
+      <div class="alert alert-success">
+        Welcome, <%= currentDriver.name %>!
+        Status: <span class="badge bg-primary"><%= currentDriver.status %></span>
       </div>
-    </div>
+    <% } %>
   </div>
 
-  <!-- Current Trip Section -->
-  <div class="card mb-4">
-    <div class="card-header bg-success text-white">
-      <h3>Current Trip</h3>
-    </div>
-    <div class="card-body">
-      <% if (currentTrip) { %>
-        <div class="row">
-          <div class="col-md-6">
-            <p><strong>Route:</strong> <%= currentTrip.origin %> to <%= currentTrip.destination %></p>
-            <p><strong>Load ID:</strong> <%= currentTrip.loadId || 'N/A' %></p>
-          </div>
-          <div class="col-md-6">
-            <form action="/api/trips/<%= currentTrip.id %>" method="POST">
-              <input type="hidden" name="_method" value="DELETE">
-              <button type="submit" class="btn btn-danger float-end">Complete Trip</button>
-            </form>
-          </div>
-        </div>
-        <div id="map-container" style="height: 300px; background: #eee; margin-top: 20px;">
-          <!-- Map would go here -->
-        </div>
-      <% } else { %>
-        <p class="text-muted">No active trips</p>
-      <% } %>
-    </div>
-  </div>
-
-  <!-- Trip History -->
-  <div class="card">
-    <div class="card-header bg-secondary text-white">
-      <h3>Trip History</h3>
-    </div>
-    <div class="card-body">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Route</th>
-            <th>Date</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% tripHistory.forEach(trip => { %>
-            <tr>
-              <td><%= trip.origin %> to <%= trip.destination %></td>
-              <td><%= new Date(trip.date).toLocaleDateString() %></td>
-              <td><span class="badge bg-<%= trip.completed ? 'success' : 'warning' %>">
-                <%= trip.completed ? 'Completed' : 'In Progress' %>
-              </span></td>
-            </tr>
-          <% }) %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-
-
-<%- include('./partials/footer') %>
+  <%- include('partials/footer') %>
+</body>
+</html>

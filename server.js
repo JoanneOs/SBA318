@@ -14,7 +14,7 @@
 // To run this application:
 
 
-//   git add . && git commit -m "styles in header" && git push
+//   git add . && git commit -m "styles in headers" && git push
 
 
 
@@ -59,7 +59,6 @@ app.use(express.json()); // allow JSON data in POST requests
 app.use(express.urlencoded({ extended: true })); // allow form data
 app.use(express.static(path.join(__dirname, 'public'))); // serve CSS, JS, images, etc
 
-
 // Step 5: Set up EJS as the view engine (so we can render HTML with data)
 app.set('view engine', 'ejs');
 
@@ -68,18 +67,10 @@ app.use('/', require('./routes/pages')); // all regular pages
 app.use('/api/drivers', require('./routes/api/drivers')); // API for drivers
 app.use('/api/trips', require('./routes/api/trips')); // API for trips
 
-
-//   git add . && git commit -m "post delete " && git push
-
-
 // Step 7: Handle errors in a nice way
 const errorHandler = require('./middleware/errorHandler');
 app.use(errorHandler); // this catches errors and sends a friendly message
 
-// route
-// app.get('/', (req, res) => {
-//   res.send('Hello from Triway Transportation!');
-// });
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
