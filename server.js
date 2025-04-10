@@ -64,6 +64,13 @@ app.use('/api/drivers', require('./routes/api/drivers')); // API for drivers
 app.use('/api/trips', require('./routes/api/trips')); // API for trips
 
 
+//   git add . && git commit -m "error handler" && git push
+
+
+// Step 7: Handle errors in a nice way
+const errorHandler = require('./middleware/errorHandler');
+app.use(errorHandler); // this catches errors and sends a friendly message
+
 // route
 // app.get('/', (req, res) => {
 //   res.send('Hello from Triway Transportation!');
