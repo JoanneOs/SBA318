@@ -14,7 +14,7 @@
 // To run this application:
 
 
-//   git add . && git commit -m "{driver}" && git push
+//   git add . && git commit -m "list all drivers" && git push
 
 
 

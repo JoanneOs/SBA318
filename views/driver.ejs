@@ -1,0 +1,16 @@
+<!--this page shows a list of all drivers -->
+
+<%- include('./partials/header') %>
+<%- include('./partials/nav') %>
+
+<h1>Our Drivers</h1>
+
+<ul>
+  <% drivers.forEach(driver => { %>
+    <li>
+      <strong><%= driver.name %></strong> – <%= driver.licenseNumber %>
+    </li>
+  <% }) %>
+</ul>
+
+<%- include('./partials/footer') %>
