@@ -1,0 +1,27 @@
+<!--this shows trip data for the manager -->
+
+<%- include('./partials/header') %>
+<%- include('./partials/nav') %>
+
+<h1>Manager Dashboard</h1>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Driver</th>
+      <th>Destination</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% trips.forEach(trip => { %>
+      <tr>
+        <td><%= trip.driverName %></td>
+        <td><%= trip.destination %></td>
+        <td><%= trip.date %></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<%- include('./partials/footer') %>

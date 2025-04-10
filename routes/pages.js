@@ -6,6 +6,7 @@ const router = express.Router();
 //route will render the driver page and pass all drivers to the page
 const drivers = require('../data/drivers.json');
 
+const trips = require('../data/trips.json');
 
 // Route for homepage
 router.get('/', (req, res) => {
@@ -24,7 +25,7 @@ router.get('/drivers', (req, res) => {
 
 // Route for manager page
 router.get('/manager', (req, res) => {
-  res.render('manager'); // show manager.ejs
+  res.render('manager', {trips}); // show manager.ejs
 });
 
 module.exports = router;
