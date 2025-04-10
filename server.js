@@ -14,7 +14,7 @@
 // To run this application:
 
 
-//   git add . && git commit -m "error message" && git push
+//   git add . && git commit -m "ejs, homepage ejs" && git push
 
 
 
