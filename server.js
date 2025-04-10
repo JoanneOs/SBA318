@@ -69,7 +69,7 @@ app.use('/api/drivers', require('./routes/api/drivers')); // API for drivers
 app.use('/api/trips', require('./routes/api/trips')); // API for trips
 
 
-//   git add . && git commit -m "add & delete vehicle" && git push
+//   git add . && git commit -m "post delete " && git push
 
 
 // Step 7: Handle errors in a nice way
