@@ -153,3 +153,38 @@ How to test quickly:
 
 For POST/PUT, add -H "Content-Type: application/json" -d '{"key":"value"}'
 For DELETE/PUT, add -X DELETE or -X PUT
+
+
+Project Overview
+
+We are building a website for TriWay, a trucking company. This site acts as a control center where managers and drivers can access important information, such as trip details, driver assignments, and truck destinations. The project is built from scratch using Node.js and Express. The goal is to create a functional, dynamic website that allows for managing trips, drivers, and related data.
+Project Structure
+
+To keep things organized, we’ve divided the project into different sections. Each section plays a specific role in making the website work.
+The controllers are responsible for the logic behind handling user requests, like when someone wants to see a list of drivers or view a specific trip.
+The models contain the data and define the structure for things like trips and drivers.
+The routes guide the website to the right pages and decide what information should be shown when someone accesses a particular route or page.
+The views are the actual pages that users will see, such as the homepage and the driver portal.
+The middleware acts as a helper, managing tasks like user authentication, error handling, and logging.
+The public folder contains everything that makes the website look nice—styles, images, and scripts.
+The data folder holds the static data, such as the information about drivers and trips, stored in JSON files.
+The server.js file is the heart of the project, starting up the server and making everything run.
+The Goal
+
+This project is designed to help manage a transportation company’s operations. Managers will be able to add, update, and delete trips, while drivers can log in and see the details of their assigned trips. Additionally, the website will handle errors, ensuring that users are given clear messages when something goes wrong.
+The project uses the Express MVC (Model-View-Controller) architecture, allowing the site to handle dynamic data. This setup enables the website to serve real-time information while maintaining a clean and organized structure behind the scenes.
+Setting Up the Project
+
+To get the project up and running, you’ll first need to install the necessary dependencies and start the server. Once the server is running, you can access the website in your browser.
+Running the Project
+
+To start the website, all you need to do is run a few commands. First, you’ll install the required dependencies, then start the server. After that, you can access the website by navigating to the provided address in your web browser.
+How to Contribute
+
+If you want to contribute to the project, you can fork the repository and make changes in your own branch. Once you’ve made and tested your changes, you can submit a pull request to have your contributions reviewed and merged into the main project.
+API Routes
+
+The project includes several routes that allow users to interact with the data. For example, users can fetch information about drivers, update driver details, or add new trips. Each route is designed to handle specific requests related to drivers, trips, and the overall management system.
+Testing
+
+When testing, it’s important to send requests in the right format and use the correct methods (such as GET, POST, PUT, or DELETE) to interact with the data. This helps ensure that everything functions as expected.
