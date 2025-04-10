@@ -14,7 +14,7 @@
 // To run this application:
 
 
-//   git add . && git commit -m "routes all driver data" && git push
+//   git add . && git commit -m "routes all trip data" && git push
 
 
 
