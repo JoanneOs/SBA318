@@ -24,4 +24,185 @@
   </tbody>
 </table>
 
+
+<div class="container my-4">
+    <!-- Driver Management -->
+    <div class="card mb-4">
+      <div class="card-header bg-dark text-white">
+        <h3>Driver Management</h3>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <form action="/api/drivers" method="POST" class="row g-3">
+              <div class="col-md-6">
+                <input type="text" name="name" class="form-control" placeholder="Driver Name" required>
+              </div>
+              <div class="col-md-4">
+                <select name="status" class="form-select" required>
+                  <option value="Available">Available</option>
+                  <option value="On Trip">On Trip</option>
+                  <option value="Off Duty">Off Duty</option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <button type="submit" class="btn btn-success">Add Driver</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Driver</th>
+              <th>Status</th>
+              <th>Current Trip</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% drivers.forEach(driver => { %>
+              <tr>
+                <td><%= driver.name %></td>
+                <td>
+                  <span class="badge bg-<%= 
+                    driver.status === 'Available' ? 'success' : 
+                    driver.status === 'On Trip' ? 'warning' : 'secondary' 
+                  %>">
+                    <%= driver.status %>
+                  </span>
+                </td>
+                <td>
+                  <% const driverTrip = trips.find(t => t.driverId === driver.id && !t.completed) %>
+                  <%= driverTrip ? `${driverTrip.origin} → ${driverTrip.destination}` : 'None' %>
+                </td>
+                <td>
+                  <div class="btn-group">
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" 
+                      data-bs-target="#assignTripModal" data-driver-id="<%= driver.id %>">
+                      Assign Trip
+                    </button>
+                    <form action="/api/drivers/<%= driver.id %>" method="POST" class="d-inline">
+                      <input type="hidden" name="_method" value="DELETE">
+                      <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    <!-- Trip Management -->
+    <div class="card mb-4">
+      <div class="card-header bg-primary text-white">
+        <h3>Trip Management</h3>
+      </div>
+      <div class="card-body">
+        <form action="/api/trips" method="POST" class="row g-3 mb-4">
+          <div class="col-md-3">
+            <input type="text" name="origin" class="form-control" placeholder="Origin" required>
+          </div>
+          <div class="col-md-3">
+            <input type="text" name="destination" class="form-control" placeholder="Destination" required>
+          </div>
+          <div class="col-md-2">
+            <input type="text" name="loadId" class="form-control" placeholder="Load ID">
+          </div>
+          <div class="col-md-2">
+            <select name="driverId" class="form-select">
+              <option value="">Unassigned</option>
+              <% drivers.filter(d => d.status === 'Available').forEach(driver => { %>
+                <option value="<%= driver.id %>"><%= driver.name %></option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-success">Create Trip</button>
+          </div>
+        </form>
+  
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Route</th>
+              <th>Driver</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% trips.forEach(trip => { %>
+              <tr>
+                <td><%= trip.origin %> to <%= trip.destination %></td>
+                <td>
+                  <% const driver = drivers.find(d => d.id === trip.driverId) %>
+                  <%= driver ? driver.name : 'Unassigned' %>
+                </td>
+                <td>
+                  <span class="badge bg-<%= trip.completed ? 'secondary' : 'success' %>">
+                    <%= trip.completed ? 'Completed' : 'Active' %>
+                  </span>
+                </td>
+                <td>
+                  <% if (!trip.completed) { %>
+                    <form action="/api/trips/<%= trip.id %>" method="POST" class="d-inline">
+                      <input type="hidden" name="_method" value="DELETE">
+                      <button type="submit" class="btn btn-sm btn-danger">Complete</button>
+                    </form>
+                  <% } %>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Assign Trip Modal -->
+  <div class="modal fade" id="assignTripModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Assign Trip</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="assignTripForm" method="POST">
+          <input type="hidden" name="_method" value="PUT">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Select Trip</label>
+              <select name="tripId" class="form-select" required>
+                <% trips.filter(t => !t.driverId && !t.completed).forEach(trip => { %>
+                  <option value="<%= trip.id %>">
+                    <%= trip.origin %> → <%= trip.destination %>
+                  </option>
+                <% }) %>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Assign Trip</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Handle modal driver ID assignment
+    document.getElementById('assignTripModal').addEventListener('show.bs.modal', function(event) {
+      const button = event.relatedTarget;
+      const driverId = button.getAttribute('data-driver-id');
+      const form = document.getElementById('assignTripForm');
+      form.action = `/api/drivers/${driverId}`;
+    });
+  </script>
+  
+
 <%- include('./partials/footer') %>
