@@ -14,7 +14,7 @@
 // To run this application:
 
 
-//   git add . && git commit -m "bottom part" && git push
+//   git add . && git commit -m "manually driver jason info" && git push
 
 
 
