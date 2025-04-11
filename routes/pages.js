@@ -88,7 +88,38 @@ router.get('/drivers', (req, res) => {
 
 //driver 1 and 2 
 
+// Route for individual driver page
+// router.get('/drivers/:id', (req, res) => {
+//     const driverId = parseInt(req.params.id);
+//     const driver = tripsData[driverId];
+  
+//     if (driver) {
+//       res.render('driver', { driver }); // show driver.ejs with data
+//     } else {
+//       res.send('Driver not found');
+//     }
+//   });
 
+//the problem was : using tripsData[driverId] which looks up by array index (position), not by driver ID.
+
+const driversData = require('../data/drivers.json'); // Add this at the top
+
+router.get('/drivers/:id', (req, res) => {
+  const driverId = parseInt(req.params.id);
+  const driver = driversData.find(d => d.id === driverId);
+  
+  if (!driver) {
+    return res.status(404).send('Driver not found');
+  }
+  
+  // Optional: Get trips for this driver
+  const driverTrips = tripsData.filter(trip => trip.driverId === driverId);
+  
+  res.render('driver', { 
+    driver,
+    trips: driverTrips // Pass trips to template if needed
+  });
+});
 
 // Route for trips page
 router.get('/trips', (req, res) => {
