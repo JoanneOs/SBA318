@@ -1,16 +1,14 @@
-<!-- views/driver.ejs -->
+<%- include('partials/header') %>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Driver Info</title>
-</head>
-<body>
-  <h1>Driver: <%= driver.name %></h1>
-  <p>Status: <%= driver.status %></p>
-  <p>ID: <%= driver.id %></p>
-  <p>Other info: <%= driver.otherInfo %></p> <!-- Adjust according to your data structure -->
-</body>
-</html>
+<h1>All Drivers</h1>
+<ul>
+  <% drivers.forEach(driver => { %>
+    <li>
+      <a href="/drivers/<%= driver.id %>">
+        <%= driver.name %> (ID: <%= driver.id %>)
+      </a>
+    </li>
+  <% }) %>
+</ul>
+
+<%- include('partials/footer') %>

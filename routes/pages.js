@@ -66,70 +66,83 @@
 
 const express = require('express');
 const router = express.Router();
+const path = require('path');
+const tripsData = require('../data/trips.json');
 
-const tripsData = require('../data/trips.json'); // import trips from JSON
+// Helper to get unique drivers from trips
+const getUniqueDrivers = () => {
+  const driversMap = new Map();
+  tripsData.forEach(trip => {
+    if (!driversMap.has(trip.driverId)) {
+      driversMap.set(trip.driverId, {
+        id: trip.driverId,
+        name: trip.driverName
+      });
+    }
+  });
+  return Array.from(driversMap.values());
+};
 
-// Route for homepage
+// Homepage
 router.get('/', (req, res) => {
-  res.render('index'); // renders index.ejs
+  res.render('index');
 });
 
-// // Route for drivers page (list of drivers from trips data)
-// router.get('/drivers', (req, res) => {
-//   const drivers = [...new Set(tripsData.map(trip => trip.driverName))]; // get unique driver names
-//   res.render('drivers', { drivers }); // renders drivers.ejs with driver data
-// });
-
+// Drivers List
 router.get('/drivers', (req, res) => {
-    const driver = tripsData[0]; // just using the first one for testing
-    res.render('drivers', { driver }); //  sends driver to EJS
+  res.render('drivers', { 
+    drivers: getUniqueDrivers() 
   });
-  
+});
 
-//driver 1 and 2 
-
-// Route for individual driver page
-// router.get('/drivers/:id', (req, res) => {
-//     const driverId = parseInt(req.params.id);
-//     const driver = tripsData[driverId];
-  
-//     if (driver) {
-//       res.render('driver', { driver }); // show driver.ejs with data
-//     } else {
-//       res.send('Driver not found');
-//     }
-//   });
-
-//the problem was : using tripsData[driverId] which looks up by array index (position), not by driver ID.
-
-const driversData = require('../data/drivers.json'); // Add this at the top
-
+// Single Driver Profile
 router.get('/drivers/:id', (req, res) => {
-  const driverId = parseInt(req.params.id);
-  const driver = driversData.find(d => d.id === driverId);
-  
-  if (!driver) {
-    return res.status(404).send('Driver not found');
+  try {
+    const driverId = Number(req.params.id);
+    const driverTrips = tripsData.filter(trip => trip.driverId === driverId);
+    
+    if (driverTrips.length === 0) {
+      const validIds = [...new Set(tripsData.map(t => t.driverId))];
+      return res.status(404).render('error', {
+        message: `Driver ${driverId} not found`,
+        details: `Valid IDs: ${validIds.join(', ')}`
+      });
+    }
+    
+    res.render('driver', {
+      driver: {
+        id: driverId,
+        name: driverTrips[0].driverName,
+        trips: driverTrips
+      }
+    });
+    
+  } catch (err) {
+    console.error('Driver route error:', err);
+    res.status(500).render('error', {
+      message: 'Server Error',
+      details: 'Check server logs'
+    });
   }
-  
-  // Optional: Get trips for this driver
-  const driverTrips = tripsData.filter(trip => trip.driverId === driverId);
-  
-  res.render('driver', { 
-    driver,
-    trips: driverTrips // Pass trips to template if needed
+});
+
+// Trips Page
+router.get('/trips', (req, res) => {
+  res.render('trips', { trips: tripsData });
+});
+
+// Manager Dashboard
+router.get('/manager', (req, res) => {
+  res.render('manager', { trips: tripsData });
+});
+
+// Debug Endpoint
+router.get('/debug-drivers', (req, res) => {
+  res.json({
+    allDrivers: getUniqueDrivers(),
+    sampleTrip: tripsData[0],
+    filePath: path.resolve(__dirname, '../data/trips.json')
   });
 });
 
-// Route for trips page
-router.get('/trips', (req, res) => {
-  res.render('trips'); // renders trips.ejs
-});
-
-// Route for manager page with trip data
-router.get('/manager', (req, res) => {
-  res.render('manager', { trips: tripsData }); // pass trips data to manager.ejs
-});
-
-// Export router to use in server.js
 module.exports = router;

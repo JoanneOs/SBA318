@@ -1,4 +1,17 @@
 [
-    { "id": 1, "name": "Alex Johnson" },
-    { "id": 2, "name": "Maria Gomez" }
-  ]
+    {
+      "id": 101,
+      "origin": "Dallas",
+      "destination": "Houston",
+      "driverId": 1,
+      "driverName": "Alex Johnson" 
+    },
+    {
+      "id": 102,
+      "origin": "Austin",
+      "destination": "San Antonio",
+      "driverId": 2,
+      "driverName": "Maria Gomez"
+    }
+
+]

@@ -1,0 +1,20 @@
+<%- include('partials/header') %>
+
+<h1><%= driver.name %>'s Trips</h1>
+
+<% if (driver.trips.length > 0) { %>
+  <ul>
+    <% driver.trips.forEach(trip => { %>
+      <li>
+        <strong><%= trip.origin %> → <%= trip.destination %></strong>
+        (Trip ID: <%= trip.id %>)
+      </li>
+    <% }) %>
+  </ul>
+<% } else { %>
+  <p>No trips assigned yet.</p>
+<% } %>
+
+<a href="/drivers">← Back to all drivers</a>
+
+<%- include('partials/footer') %>
