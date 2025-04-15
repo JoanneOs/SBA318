@@ -1,16 +1,12 @@
 [
-    {
-      "id": 101,
-      "origin": "Dallas",
-      "destination": "Houston",
-      "driverId": 1,
-      "driverName": "Alex Johnson"
-    },
-    {
-      "id": 102,
-      "origin": "Austin",
-      "destination": "San Antonio",
-      "driverId": 2,
-      "driverName": "Maria Gomez"
-    }
-  ]
+  {
+    "id": "1617898651286",
+    "name": "John Doe",
+    "status": "active"
+  },
+  {
+    "id": "1617898756789",
+    "name": "Jane Smith",
+    "status": "inactive"
+  }
+]

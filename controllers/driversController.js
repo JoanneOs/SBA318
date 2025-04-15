@@ -1,10 +1,21 @@
-// This file handles the logic for drivers — like sending data to the frontend
+const fs = require('fs').promises;
+const path = require('path');
+const driverDataPath = path.join(__dirname, '../data/drivers.json');
 
-const drivers = require('../data/drivers.json'); // grab the sample data
+// Controller function to get drivers and render the page
+async function getDrivers(req, res, next) {
+  try {
+    const data = await fs.readFile(driverDataPath, 'utf8');
+    const drivers = JSON.parse(data);
 
-// This function sends driver data as JSON
-const getDrivers = (req, res) => {
-  res.json(drivers); // respond with all the drivers
-};
+    // Log data to ensure it's being read properly
+    console.log(drivers);
+
+    // Passing the drivers data to the EJS view
+    res.render('driver', { drivers });  // Pass 'drivers' as an object
+  } catch (error) {
+    next(error);  // Error handling
+  }
+}
 
 module.exports = { getDrivers };

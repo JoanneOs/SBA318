@@ -1,14 +1,20 @@
-<%- include('partials/header') %>
-
-<h1>All Drivers</h1>
-<ul>
-  <% drivers.forEach(driver => { %>
-    <li>
-      <a href="/drivers/<%= driver.id %>">
-        <%= driver.name %> (ID: <%= driver.id %>)
-      </a>
-    </li>
-  <% }) %>
-</ul>
-
-<%- include('partials/footer') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drivers</title>
+</head>
+<body>
+  <h1>Driver List</h1>
+  <% if (drivers && drivers.length > 0) { %>
+    <ul>
+      <% drivers.forEach(driver => { %>
+        <li><%= driver.name %> - <%= driver.status %></li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <p>No drivers available.</p>
+  <% } %>
+</body>
+</html>
