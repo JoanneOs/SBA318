@@ -179,6 +179,9 @@ const driverApiRoutes = require('./routes/api/drivers'); // API routes for drive
 const tripApiRoutes = require('./routes/api/trips'); // API routes for trips data
 const vehicleApiRoutes = require('./routes/api/vehicles'); // API routes for vehicle data
 
+
+const methodOverride = require('method-override');
+app.use(methodOverride('_method')); // Allows PUT/DELETE via POST
 // Set up the EJS view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
